@@ -67,7 +67,7 @@ namespace epee
       return true;
       CATCH_ENTRY("portable_storage::store_to_binary", false)
     }
-      
+
     bool portable_storage::load_from_binary(const binarybuffer& source)
     {
       m_root.m_entries.clear();
@@ -77,8 +77,8 @@ namespace epee
         return false;
       }
       storage_block_header* pbuff = (storage_block_header*)source.data();
-      if(pbuff->m_signature_a != PORTABLE_STORAGE_SIGNATUREA || 
-        pbuff->m_signature_b != PORTABLE_STORAGE_SIGNATUREB 
+      if(pbuff->m_signature_a != PORTABLE_STORAGE_SIGNATUREA ||
+        pbuff->m_signature_b != PORTABLE_STORAGE_SIGNATUREB
         )
       {
         LOG_ERROR("portable_storage: wrong binary format - signature missmatch");
@@ -180,7 +180,7 @@ namespace epee
       TRY_ENTRY();
       CHECK_AND_ASSERT(hsec_array, false);
       if(hsec_array->type() != typeid(array_entry_t<section>))
-        return nullptr;
+        return false;
       array_entry_t<section>& sec_array = boost::get<array_entry_t<section>>(*hsec_array);
       h_child_section = sec_array.get_next_val();
       if(!h_child_section)
@@ -217,7 +217,7 @@ namespace epee
     {
       TRY_ENTRY();
       CHECK_AND_ASSERT(hsec_array, false);
-      CHECK_AND_ASSERT_MES(hsec_array->type() == typeid(array_entry_t<section>), 
+      CHECK_AND_ASSERT_MES(hsec_array->type() == typeid(array_entry_t<section>),
         false, "unexpected type(not 'section') in insert_next_section, type: " << hsec_array->type().name());
 
       array_entry_t<section>& sec_array = boost::get<array_entry_t<section>>(*hsec_array);
