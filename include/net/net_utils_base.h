@@ -1,6 +1,6 @@
 // Copyright (c) 2006-2013, Andrey N. Sabelnikov, www.sabelnikov.net
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
 // * Redistributions of source code must retain the above copyright
@@ -11,7 +11,7 @@
 // * Neither the name of the Andrey N. Sabelnikov nor the
 // names of its contributors may be used to endorse or promote products
 // derived from this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -22,7 +22,7 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
+//
 
 
 
@@ -36,7 +36,12 @@
 #define MAKE_IP( a1, a2, a3, a4 )	(a1|(a2<<8)|(a3<<16)|(a4<<24))
 #endif
 
+#if BOOST_VERSION >= 106600
+namespace boost { namespace asio { class io_context; typedef io_context io_service; }
+}
+#else
 namespace boost { namespace asio { class io_service; } }
+#endif
 
 namespace epee
 {
@@ -88,7 +93,7 @@ namespace net_utils
       set_details(a.m_connection_id, a.m_remote_ip, a.m_remote_port, a.m_is_income);
       return *this;
     }
-    
+
   private:
     template<class t_protocol_handler>
     friend class connection;
@@ -121,7 +126,7 @@ namespace net_utils
   //some helpers
 
 
-  inline 
+  inline
     std::string print_connection_context(const connection_context_base& ctx)
   {
     std::stringstream ss;
@@ -129,7 +134,7 @@ namespace net_utils
     return ss.str();
   }
 
-  inline 
+  inline
     std::string print_connection_context_short(const connection_context_base& ctx)
   {
     std::stringstream ss;
@@ -157,13 +162,13 @@ namespace net_utils
 #define LOG_PRINT_CCONTEXT_L2(message) LOG_PRINT_CC_L2(context, message)
 #define LOG_PRINT_CCONTEXT_L3(message) LOG_PRINT_CC_L3(context, message)
 #define LOG_ERROR_CCONTEXT(message)    LOG_ERROR_CC(context, message)
- 
+
 #define LOG_PRINT_CCONTEXT_GREEN(message, log_level) LOG_PRINT_CC_GREEN(context, message, log_level)
 #define LOG_PRINT_CCONTEXT_RED(message, log_level) LOG_PRINT_CC_RED(context, message, log_level)
-#define LOG_PRINT_CCONTEXT_BLUE(message, log_level) LOG_PRINT_CC_BLUE(context, message, log_level) 
-#define LOG_PRINT_CCONTEXT_YELLOW(message, log_level) LOG_PRINT_CC_YELLOW(context, message, log_level) 
-#define LOG_PRINT_CCONTEXT_CYAN(message, log_level) LOG_PRINT_CC_CYAN(context, message, log_level) 
-#define LOG_PRINT_CCONTEXT_MAGENTA(message, log_level) LOG_PRINT_CC_MAGENTA(context, message, log_level) 
+#define LOG_PRINT_CCONTEXT_BLUE(message, log_level) LOG_PRINT_CC_BLUE(context, message, log_level)
+#define LOG_PRINT_CCONTEXT_YELLOW(message, log_level) LOG_PRINT_CC_YELLOW(context, message, log_level)
+#define LOG_PRINT_CCONTEXT_CYAN(message, log_level) LOG_PRINT_CC_CYAN(context, message, log_level)
+#define LOG_PRINT_CCONTEXT_MAGENTA(message, log_level) LOG_PRINT_CC_MAGENTA(context, message, log_level)
 
 #define CHECK_AND_ASSERT_MES_CC(condition, return_val, err_message) CHECK_AND_ASSERT_MES(condition, return_val, "[" << epee::net_utils::print_connection_context_short(context) << "]" << err_message)
 
